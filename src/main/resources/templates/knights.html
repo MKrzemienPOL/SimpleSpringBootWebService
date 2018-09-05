@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task Scheduler</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel='stylesheet' th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+
+    <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+<h1 style="text-align: center"><strong>Knights - Task Scheduler</strong></h1>
+    <div class="container">
+        <label style="font-size: 30px" class="label label-info">Gold: <span th:text="${playerInformation.gold}"></span></label>
+        <a class="btn btn-warning" href="/checkQuests">Update Quests</a>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>Knight</td>
+                <td>Level</td>
+            </tr>
+            </thead>
+            <tbody th:each="knight : ${knights}">
+            <tr>
+                <td th:text="${knight.name}"></td>
+                <td th:text="${knight.level}"></td>
+                <td>
+                    <span th:if="${knight.quest == null}">No quests <a class="btn btn-primary" th:href="${'/assignQuest?knightId=' + knight.id}">Assign Quest</a></span>
+                    <span th:if="${knight.quest != null}" th:text="${knight.quest.description}"/>
+                </td>
+                <td><a class="btn btn-default" th:href="${'/knight?id=' + knight.id}">Show</a></td>
+                <td><a class="btn btn-danger" th:href="${'/knight/delete/' + knight.id}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <a class="btn btn-success" href="/newknight">Create new knight</a>
+        </div>
+        <br>
+        <div class="row">
+            <form action="#" th:action="@{/logout}" method="post">
+                <input type="submit" value="Logout">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
